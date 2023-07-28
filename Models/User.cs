@@ -16,10 +16,8 @@ public partial class User
     public string Password { get; set; } = null!;
 
     public bool? Isadmin { get; set; }
-    public bool IsRegistered { get; set; }
+
+    public bool? Isregistered { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
-
-
-    
 }

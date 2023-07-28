@@ -13,62 +13,62 @@ namespace TicketApp.Services
             _context = context;
         }
 
-        public bool AuthenticateUser(string email, string password)
-        {
-            var user = _context.Users.SingleOrDefault(u => u.Email == email);
+        // public bool AuthenticateUser(string email, string password)
+        // {
+        //     var user = _context.Users.SingleOrDefault(u => u.Email == email);
 
-            if (user == null)
-            {
-                return false;
-            }
+        //     if (user == null)
+        //     {
+        //         return false;
+        //     }
 
-            // Haszujemy podane hasło
-            var hashedPassword = HashPassword(password);
+        //     // Haszujemy podane hasło
+        //     var hashedPassword = HashPassword(password);
 
-            // Porównujemy hasła
-            return user.Password == hashedPassword;
-        }
+        //     // Porównujemy hasła
+        //     return user.Password == hashedPassword;
+        // }
 
-        public void RegisterUser(string firstName, string lastName, string email, string password)
-        {
-            // Sprawdzamy, czy użytkownik o podanym emailu już istnieje
-            if (_context.Users.Any(u => u.Email == email))
-            {
-                throw new Exception("Użytkownik o podanym adresie email już istnieje.");
-            }
+        // public void RegisterUser(string firstName, string lastName, string email, string password)
+        // {
+        //     // Sprawdzamy, czy użytkownik o podanym emailu już istnieje
+        //     if (_context.Users.Any(u => u.Email == email))
+        //     {
+        //         throw new Exception("Użytkownik o podanym adresie email już istnieje.");
+        //     }
 
-            // Haszujemy podane hasło
-            var hashedPassword = HashPassword(password);
+        //     // Haszujemy podane hasło
+        //     var hashedPassword = HashPassword(password);
 
-            // Tworzymy nowego użytkownika
-            var newUser = new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = hashedPassword,
-                IsRegistered = true // Zakładamy, że rejestracja jest pełna
-            };
+        //     // Tworzymy nowego użytkownika
+        //     var newUser = new User
+        //     {
+        //         FirstName = firstName,
+        //         LastName = lastName,
+        //         Email = email,
+        //         Password = hashedPassword,
+        //         IsRegistered = true // Zakładamy, że rejestracja jest pełna
+        //     };
 
-            // Dodajemy użytkownika do bazy danych
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-        }
+        //     // Dodajemy użytkownika do bazy danych
+        //     _context.Users.Add(newUser);
+        //     _context.SaveChanges();
+        // }
 
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+        // private string HashPassword(string password)
+        // {
+        //     using (SHA256 sha256Hash = SHA256.Create())
+        //     {
+        //         byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
+        //         StringBuilder builder = new StringBuilder();
+        //         for (int i = 0; i < bytes.Length; i++)
+        //         {
+        //             builder.Append(bytes[i].ToString("x2"));
+        //         }
+        //         return builder.ToString();
+        //     }
+        // }
 
         public List<User> GetAllUsers()
         {
