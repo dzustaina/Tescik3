@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using TicketApp.Models;
 using TicketApp.Services;
@@ -71,5 +73,45 @@ namespace TicketApp.Controllers
             _userService.DeleteUser(id);
             return NoContent();
         }
+
+        [HttpPost("login")]
+        public IActionResult Login(string email, string password)
+        {
+            // Autentykacja użytkownika na podstawie przekazanych danych (np. email i hasło)
+            var isAuthenticated = _userService.AuthenticateUser(email, password);
+
+            if (isAuthenticated)
+            {
+                // Tutaj można np. wygenerować i zwrócić token JWT, który będzie używany do uwierzytelniania użytkownika w kolejnych żądaniach
+                // W tym przykładzie zwracamy po prostu komunikat o powodzeniu logowania
+                return Ok("Logowanie udane.");
+            }
+            else
+            {
+                return Unauthorized("Niepoprawny email lub hasło.");
+            }
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register(string firstName, string lastName, string email, string password)
+        {
+            try
+            {
+                // Rejestracja nowego użytkownika na podstawie przekazanych danych
+                _userService.RegisterUser(firstName, lastName, email, password);
+                return Ok("Rejestracja udana.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        
+
+
+        
+
+       
     }
 }
