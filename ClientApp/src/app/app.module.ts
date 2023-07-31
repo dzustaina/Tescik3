@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -12,6 +13,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './user/registration/registration.component';
+import { UserService } from './shared/user.service';
 
 @NgModule({
   
@@ -20,11 +22,14 @@ import { RegistrationComponent } from './user/registration/registration.componen
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    UserComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
     RouterModule.forRoot([
@@ -38,7 +43,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
       }
     ])
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })
