@@ -14,6 +14,7 @@ public partial class Booking
     public int? Numofseats { get; set; }
 
     public bool? Iscancelled { get; set; }
+    public DateTime BookingDate { get; set; }
 
     public virtual Showtime? Showtime { get; set; }
 

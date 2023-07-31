@@ -10,6 +10,7 @@ public partial class Showtime
     public int? Movieid { get; set; }
 
     public DateTime? Startdatetime { get; set; }
+    public int AvailableSeats { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

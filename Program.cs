@@ -19,10 +19,10 @@ namespace TicketApp
             builder.Services.AddControllersWithViews();
             
             // Rejestracja serwisów
-            builder.Services.AddTransient<MovieService>();
+            builder.Services.AddScoped<MovieService>();
             builder.Services.AddScoped<ShowtimeService>();
-            builder.Services.AddSingleton<BookingService>();
-            builder.Services.AddSingleton<UserService>();
+            builder.Services.AddScoped<BookingService>();
+            builder.Services.AddScoped<UserService>();
 
             var app = builder.Build();
 

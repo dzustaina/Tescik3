@@ -54,5 +54,52 @@ namespace TicketApp.Services
                 _context.SaveChanges();
             }
         }
+
+        public void BookTickets(BookingRequestModel request)
+        {
+            var showtime = _context.Showtimes.FirstOrDefault(s => s.Showtimeid == request.ShowtimeId);
+            var user = _context.Users.FirstOrDefault(u => u.Userid == request.UserId);
+
+            if (showtime == null || user == null)
+            {
+                throw new Exception("Nieprawidłowy seans lub użytkownik.");
+            }
+
+            if (showtime.AvailableSeats < request.NumberOfTickets)
+            {
+                throw new Exception("Brak wystarczającej liczby wolnych miejsc.");
+            }
+
+            var booking = new Booking
+            {
+                Showtimeid = request.ShowtimeId,
+                Userid = request.UserId,
+                Numofseats = request.NumberOfTickets,
+                BookingDate = DateTime.Now
+            };
+
+            showtime.AvailableSeats -= request.NumberOfTickets;
+
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+        }
+
+        public void CancelBooking(int bookingId)
+        {
+            var booking = _context.Bookings.FirstOrDefault(b => b.Bookingid == bookingId) ?? throw new Exception("Nieprawidłowa rezerwacja.");
+            var showtime = _context.Showtimes.FirstOrDefault(s => s.Showtimeid == booking.Showtimeid) ?? throw new Exception("Nieprawidłowy seans.");
+            if (booking.Numofseats.HasValue)
+            {
+                showtime.AvailableSeats += booking.Numofseats.Value;
+            }
+
+
+            _context.Bookings.Remove(booking);
+            _context.SaveChanges();
+        }
+        
+    
+
+
     }
 }

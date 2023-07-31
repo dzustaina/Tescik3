@@ -106,6 +106,7 @@ namespace TicketApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
 
         
 
